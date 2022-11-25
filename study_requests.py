@@ -1,8 +1,10 @@
 import random
 
 from encode_image import ImageBase64
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource, reqparse, request
 
+
+EXTERNAL_TOKEN = 'Token LookInside'
 
 def api_app(app):
     return Api(app)
@@ -27,6 +29,8 @@ class StudyAPI(Resource):
         return "study not found", 404
 
     def post(self):
+        if request.headers.get('Authorization') != EXTERNAL_TOKEN:
+            return f'Uncorrected EXTERNAL_TOKEN!', 400
         parser = reqparse.RequestParser()
         parser.add_argument("dicom_uid")
         parser.add_argument("image")
