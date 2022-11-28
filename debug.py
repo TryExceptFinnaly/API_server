@@ -7,7 +7,7 @@ result = ImageBase64.encode('send_image.jpg')
 
 # with open('image_base64', 'w', encoding='utf-8') as image_base64:
 #     image_base64.write(result)
-url = r'http://127.0.0.1:5000/api-external/add-visit-image-to-mediafile/'
+url = r'http://192.168.1.151:5000/api-external/add-visit-image-to-mediafile/'
 
 data = {'dicom_uid': f'{randint(1, 999)}',
         'image': result,

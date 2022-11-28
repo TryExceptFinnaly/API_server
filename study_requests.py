@@ -3,10 +3,13 @@ import random
 from encode_image import ImageBase64
 from flask_restful import Api, Resource, reqparse, request
 
-
 EXTERNAL_TOKEN = 'Token LookInside'
+root_path = ''
+
 
 def api_app(app):
+    global root_path
+    root_path = app.root_path
     return Api(app)
 
 
@@ -40,7 +43,7 @@ class StudyAPI(Resource):
             if params['dicom_uid'] == study["dicom_uid"]:
                 return f"study with dicom_uid='{params['dicom_uid']}' already exists", 400
         try:
-            image_path = ImageBase64.decode(params['image'], f'images/{params["dicom_uid"]}.jpg')
+            image_path = ImageBase64.decode(params['image'], f'{root_path}/images/{params["dicom_uid"]}.jpg')
         except Exception as exc:
             return f'{exc}', 400
         study = {
